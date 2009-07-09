@@ -1,0 +1,11 @@
+openmtbmap2img
+
+This script automatically downloads and converts an OpenMTBMap map set to Garmin compatible IMG format.
+
+Usage:
+
+./openmtbmap2img.sh [URL]
+
+where URL is an URL to desired map set, i. e. http://openmtbmap.x-nation.de/maps/mtbdenmark.7z.zip
+
+The Germany map set is used if no command line argument is given.
