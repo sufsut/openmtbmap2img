@@ -10,9 +10,15 @@ E_INTERRUPTED=71
 
 ORIGIN=`pwd`
 
-MAP_SERVER="http://openmtbmap.x-nation.de/maps/"
-MAP_FILE="mtbgermany.7z.zip"
-MAP_URL=${MAP_SERVER}${MAP_FILE}
+MAP_URL="http://openmtbmap.x-nation.de/maps/mtbgermany.7z.zip"
+
+if [ "$1" != "" ]; then
+    MAP_URL="$1"
+fi
+
+MAP_FILE=`basename ${MAP_URL}`
+MAP_FILE_EXTENSION=".${MAP_FILE#*.}"
+MAP_FILE_BASENAME=`basename -s ${MAP_FILE_EXTENSION} ${MAP_FILE}`
 
 # functions
 
@@ -95,8 +101,7 @@ if [ ! -f ${MAP_FILE} ]; then
     exit ${E_MISSING_MAP_FILE}
 fi
 
-MAP_BASENAME=`basename -s .7z.zip ${MAP_FILE}`
-7za x -o${MAP_BASENAME} ${MAP_FILE}
+7za x -o${MAP_FILE_BASENAME} ${MAP_FILE}
 
 if [ $? -ne 0 ]; then
     echo "$0: Error while unarchiving maps, exiting ..."
@@ -106,13 +111,13 @@ fi
 
 echo "(3) Building .img Mapset ..."
 
-cd ${MAP_BASENAME}
+cd ${MAP_FILE_BASENAME}
 cp white*.TYP 01002468.TYP
 gmt -wy 6350 01002468.TYP
-gmt -j -o ${MAP_BASENAME}.img -f 6350 -m "openmtbmap" 6*.img 01002468.TYP
+gmt -j -o ${MAP_FILE_BASENAME}.img -f 6350 -m "openmtbmap" 6*.img 01002468.TYP
 
-if [ -f ${MAP_BASENAME}.img ]; then
-    mv ${MAP_BASENAME}.img ${ORIGIN}
+if [ -f ${MAP_FILE_BASENAME}.img ]; then
+    mv ${MAP_FILE_BASENAME}.img ${ORIGIN}
     cleanup
 else
     echo "$0: Cannot find generated mapset, exiting ..."
