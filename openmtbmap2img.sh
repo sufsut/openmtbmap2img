@@ -41,7 +41,7 @@ CHECK_7ZA=`which -s 7za`
 
 if [ $? -ne 0 ]; then
     echo "$0: Cannot find '7za' binary"
-    echo "$0: You can install 7za from MacPorts (http://macports.org)"
+    echo "$0: You can install p7zip (contains 7za binary) from MacPorts (http://macports.org)"
     echo "$0: exiting ..."
     cleanup
     exit ${E_CANNOT_FIND_TOOL}

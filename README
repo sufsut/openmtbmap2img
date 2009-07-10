@@ -8,4 +8,4 @@ Usage:
 
 where URL is an URL to desired map set, i. e. http://openmtbmap.x-nation.de/maps/mtbdenmark.7z.zip
 
-The Germany map set is used if no command line argument is given.
+The Germany map set (mtbgermany) is used if no command line argument is given.
